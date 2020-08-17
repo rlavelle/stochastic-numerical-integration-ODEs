@@ -133,7 +133,7 @@ proteinMap = {
     tuple(np.arange(57,64)): names[15],
     tuple(np.arange(64,68)): names[16],
     tuple(np.arange(68,69)): names[17],
-    tuple(np.arange(79,72)): names[18]
+    tuple(np.arange(69,72)): names[18]
 }   
 
 def gillespie_process(T,p,trial):     
