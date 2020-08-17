@@ -310,5 +310,3 @@ def gillespie_process(T,p,trial):
 if __name__ == '__main__':
     with Pool() as pool:
         results = pool.starmap(gillespie_process, [(1,p,0),(1,p,1),(1,p,2),(1,p,3),(1,p,4),(1,p,5)])
-
-gillespie_process(1,p,0)
