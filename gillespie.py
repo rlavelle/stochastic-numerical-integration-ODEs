@@ -4,139 +4,8 @@ import math
 import csv
 from multiprocessing import Pool
 
-V = 10e-12
-NA = 6.023e23
-vna = V*NA*10e-9*10e-3
-ivna = 1/vna
-
-#Synthesis and degradation of Clb1 :
-kClb1s = 0.002
-kClb1sp = 0.2
-kClb1spp = 0.1
-kClb1d = 0.1
-kClb1dp = 0.2
-kClb1dpp = 0.02
-#NOTE : Decreasing Clb1 intrinsic decay rate widens Clb3 duration
-kClb3s = 0.002
-kClb3sp = 0.5
-kClb3d = 0.2
-kClb3Cdc20d = 0.2
-#Cdc20
-kCdc20s = 0.2
-kCdc20d = 0.1
-kCdc20Clb1p = 0.1
-kCdc20Clb3p = 0.1
-kCdc20a = 0.1
-JCdc20Clb3 = 0.1
-JCdc20clb1 = 0.1
-JCdc20 = 0.1
-kClb1Cdc20d = 0.3
-kClb3Cdc20d = 0.3
-#Clb1 phosophorylation of Cdc20 weaker than Clb3
-#Synthesis and degradation of Clb4 :
-kClb4s = 0.2
-kClb4sp = 0.1
-kClb4d = 0.2
-kClb4dp = 1
-kClb4dpp = 0.02
-#Activation and inactivation of SP :
-kSPa = 2
-kSPi = 2
-JSP = 0.01
-#Synthesis, degradation, activation, and inactivation of Cdc5 :
-kCdc5s = 0.004
-kCdc5sp = 0.03
-kCdc5spp = 0.02
-kCdc5d = 0.02
-kCdc5dp = 0.06
-kCdc5dpp = 0.002
-kCdc5a = 0.1
-kCdc5ap = 0.4
-kCdc5app = 0.3
-kCdc5i = 0.1
-#Synthesis, degradation, activation, and inacti - vation of Ndd1 :
-kNdd1s = 0.03
-kNdd1d = 0.0001
-kNdd1dp = 1
-kNdd1dpp = 0.02
-kNdd1a = 0.1
-kNdd1ap = 0.2
-kNdd1app = 0.04
-kNdd1i = 0.2
-JNdd1 = 0.04
-#Degradation of Hcm1 :
-kHcm1d = 0.02
-#Regulation of Ndt80 :
-kNdt80s = 0.01
-kNdt80sp = 2
-kNdt80d = 0.3
-JNdt80p = 0.2
-alpha = 1
-beta = 0.1
-ki = 0.01
-#degradation of Ndt80 by Ama1 :
-kNdt80dp = 0.6
-#Regulation of Sum1 :
-kSum1i = 0.025
-kSum1a = 0.000001
-kSum1ip = 0.1
-kSum1ipp = 1
-kSum1ap = 0.01
-kSum1ippp = 0.25
-kSum1app = 1
-#Regulation of Ama1 :
-kAma1a = 0.1
-kAma1i = 0.0
-kAma1ip = 0.1
-JAma1 = 0.1
-kAIas = 10
-kAIds = 1
-kAma1clb3p = 0.1
-#Faster rate of Ama1 phosphorylation by Clb1
-#Synthesis and degradation of the additional Ama1 - inhibitor (AI) :
-kAIs = 0.1
-kAId = 0.15
-#Activation and inactivation of the RC :
-kRCa = 1
-kRCi = 0.1
-kRCip = 2
-JRC = 0.01
-#Repair of DSBs :
-kDSBi = 0.02
-kdmRNA = 0.1
-kRim4mRNA = 100
-kAma1dp = 0.01
-kAma1exp = 0.08
-kAma1s = 0.01
-
-names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
-p = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
-
-proteinCount = {}
-for i in range(0,len(names)): proteinCount[names[i]] = p[i]
-
-proteinMap = {
-    tuple(np.arange(0,5)): names[0],
-    tuple(np.arange(5,9)): names[1],
-    tuple(np.arange(9,11)): names[2],
-    tuple(np.arange(11,17)): names[3],
-    tuple(np.arange(17,21)): names[4],
-    tuple(np.arange(21,26)): names[5],
-    tuple(np.arange(26,30)): names[6],
-    tuple(np.arange(30,39)): names[7],
-    # constant rates of change for protiens 8,9
-    tuple(np.arange(39,40)): names[10],
-    tuple(np.arange(40,44)): names[11],
-    tuple(np.arange(44,47)): names[12],
-    tuple(np.arange(47,54)): names[13],
-    tuple(np.arange(54,57)): names[14],
-    tuple(np.arange(57,64)): names[15],
-    tuple(np.arange(64,68)): names[16],
-    tuple(np.arange(68,69)): names[17],
-    tuple(np.arange(69,72)): names[18]
-}   
-
-def gillespie_process(T,p,trial):     
+def gillespie_process(T,p_init,trial):     
+    p = p_init
     # current time
     t = 0
     
@@ -307,6 +176,139 @@ def gillespie_process(T,p,trial):
             write.writerow(p)
         f.close()
 
+
 if __name__ == '__main__':
+    V = 10e-12
+    NA = 6.023e23
+    vna = V*NA*10e-9*10e-3
+    ivna = 1/vna
+
+    #Synthesis and degradation of Clb1 :
+    kClb1s = 0.002
+    kClb1sp = 0.2
+    kClb1spp = 0.1
+    kClb1d = 0.1
+    kClb1dp = 0.2
+    kClb1dpp = 0.02
+    #NOTE : Decreasing Clb1 intrinsic decay rate widens Clb3 duration
+    kClb3s = 0.002
+    kClb3sp = 0.5
+    kClb3d = 0.2
+    kClb3Cdc20d = 0.2
+    #Cdc20
+    kCdc20s = 0.2
+    kCdc20d = 0.1
+    kCdc20Clb1p = 0.1
+    kCdc20Clb3p = 0.1
+    kCdc20a = 0.1
+    JCdc20Clb3 = 0.1
+    JCdc20clb1 = 0.1
+    JCdc20 = 0.1
+    kClb1Cdc20d = 0.3
+    kClb3Cdc20d = 0.3
+    #Clb1 phosophorylation of Cdc20 weaker than Clb3
+    #Synthesis and degradation of Clb4 :
+    kClb4s = 0.2
+    kClb4sp = 0.1
+    kClb4d = 0.2
+    kClb4dp = 1
+    kClb4dpp = 0.02
+    #Activation and inactivation of SP :
+    kSPa = 2
+    kSPi = 2
+    JSP = 0.01
+    #Synthesis, degradation, activation, and inactivation of Cdc5 :
+    kCdc5s = 0.004
+    kCdc5sp = 0.03
+    kCdc5spp = 0.02
+    kCdc5d = 0.02
+    kCdc5dp = 0.06
+    kCdc5dpp = 0.002
+    kCdc5a = 0.1
+    kCdc5ap = 0.4
+    kCdc5app = 0.3
+    kCdc5i = 0.1
+    #Synthesis, degradation, activation, and inacti - vation of Ndd1 :
+    kNdd1s = 0.03
+    kNdd1d = 0.0001
+    kNdd1dp = 1
+    kNdd1dpp = 0.02
+    kNdd1a = 0.1
+    kNdd1ap = 0.2
+    kNdd1app = 0.04
+    kNdd1i = 0.2
+    JNdd1 = 0.04
+    #Degradation of Hcm1 :
+    kHcm1d = 0.02
+    #Regulation of Ndt80 :
+    kNdt80s = 0.01
+    kNdt80sp = 2
+    kNdt80d = 0.3
+    JNdt80p = 0.2
+    alpha = 1
+    beta = 0.1
+    ki = 0.01
+    #degradation of Ndt80 by Ama1 :
+    kNdt80dp = 0.6
+    #Regulation of Sum1 :
+    kSum1i = 0.025
+    kSum1a = 0.000001
+    kSum1ip = 0.1
+    kSum1ipp = 1
+    kSum1ap = 0.01
+    kSum1ippp = 0.25
+    kSum1app = 1
+    #Regulation of Ama1 :
+    kAma1a = 0.1
+    kAma1i = 0.0
+    kAma1ip = 0.1
+    JAma1 = 0.1
+    kAIas = 10
+    kAIds = 1
+    kAma1clb3p = 0.1
+    #Faster rate of Ama1 phosphorylation by Clb1
+    #Synthesis and degradation of the additional Ama1 - inhibitor (AI) :
+    kAIs = 0.1
+    kAId = 0.15
+    #Activation and inactivation of the RC :
+    kRCa = 1
+    kRCi = 0.1
+    kRCip = 2
+    JRC = 0.01
+    #Repair of DSBs :
+    kDSBi = 0.02
+    kdmRNA = 0.1
+    kRim4mRNA = 100
+    kAma1dp = 0.01
+    kAma1exp = 0.08
+    kAma1s = 0.01
+
+    names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
+    p_init = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
+
+    proteinCount = {}
+    for i in range(0,len(names)): proteinCount[names[i]] = p_init[i]
+
+    proteinMap = {
+        tuple(np.arange(0,5)): names[0],
+        tuple(np.arange(5,9)): names[1],
+        tuple(np.arange(9,11)): names[2],
+        tuple(np.arange(11,17)): names[3],
+        tuple(np.arange(17,21)): names[4],
+        tuple(np.arange(21,26)): names[5],
+        tuple(np.arange(26,30)): names[6],
+        tuple(np.arange(30,39)): names[7],
+        # constant rates of change for protiens 8,9
+        tuple(np.arange(39,40)): names[10],
+        tuple(np.arange(40,44)): names[11],
+        tuple(np.arange(44,47)): names[12],
+        tuple(np.arange(47,54)): names[13],
+        tuple(np.arange(54,57)): names[14],
+        tuple(np.arange(57,64)): names[15],
+        tuple(np.arange(64,68)): names[16],
+        tuple(np.arange(68,69)): names[17],
+        tuple(np.arange(69,72)): names[18]
+    }   
+
     with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(1,p,i) for i in range(0,100)])
+        results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(0,100)])
