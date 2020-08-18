@@ -110,7 +110,7 @@ kAma1exp = 0.08
 kAma1s = 0.01
 
 names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
-p = [0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna]
+p = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
 
 proteinCount = {}
 for i in range(0,len(names)): proteinCount[names[i]] = p[i]
@@ -309,4 +309,4 @@ def gillespie_process(T,p,trial):
 
 if __name__ == '__main__':
     with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(1,[0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna],i) for i in range(0,100)])
+        results = pool.starmap(gillespie_process, [(1,p,i) for i in range(0,100)])
