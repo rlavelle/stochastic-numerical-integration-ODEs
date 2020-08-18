@@ -309,6 +309,8 @@ if __name__ == '__main__':
         tuple(np.arange(68,69)): names[17],
         tuple(np.arange(69,72)): names[18]
     }   
-
+    
+    print(p_init)
     with Pool() as pool:
         results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(0,100)])
+    print(p_init)
