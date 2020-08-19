@@ -311,5 +311,7 @@ if __name__ == '__main__':
     with Pool() as pool:
         results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(0,47)])
     with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(47,90)])
+        results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(47,94)])
+     with Pool() as pool:
+        results = pool.starmap(gillespie_process, [(1,p_init,i) for i in range(94,100)])
     
