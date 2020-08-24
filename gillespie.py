@@ -46,13 +46,13 @@ def gillespie_process(T,p_init,trial):
         p17 = -kClb4d*p[4]
         p18 = -kClb4dp*Ama1(t)*p[4]*ivna
         # eq6 (fixed) FIX AGAIN? should we split (clb1(t)+clb4(t))? still a time function (same thing looks like its already split)
-        p19 = (kSPa*(p[0]-p[4])*(vna-p[5]))/(JSP*vna+vna-p[5])
+        p19 = (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5])
         p20 = -kSPi*vna*p[5]/(JSP*vna+p[5])
         # eq7
         p21 = kCdc5s*vna
         p22 = kCdc5sp*p[11]
-        p23 = kCdc5d*p[6]
-        p24 = kCdc5dp*Ama1(t)*p[6]*ivna
+        p23 = -kCdc5d*p[6]
+        p24 = -kCdc5dp*Ama1(t)*p[6]*ivna
         # eq8 (fixed) NEEDS FIXING? should we split (cdc5t(t)-cdc5a(t)) 
         p25 = kCdc5ap*ivna*p[0]*(p[6]-p[7])
         p26 = kCdc5app*ivna*p[4]*(p[6]-p[7])
@@ -72,7 +72,7 @@ def gillespie_process(T,p_init,trial):
         p36 = -kSum1a*p[12]
         # eq14 (fixed) NEEDS FIXING? should we split (clb1(t)+clb4(t)) also (sum1T-sum1icdk1(t)) sum1T=vna
         p37 = kSum1ip*(Sum1T-p[13])
-        p38 = kSum1ipp*ivna*(p[0]-p[4])*(Sum1T-p[13])
+        p38 = kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13])
         p39 = -kSum1ap*p[13]
         # eq15 (fixed) NEEDS FIXING? should we split (sum1T-sum1iRC(t)) sum1T=vna
         p40 = kSum1ippp*(Sum1T-p[14])
@@ -80,7 +80,7 @@ def gillespie_process(T,p_init,trial):
         # eq16 
         p42 = (kAma1i*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15])
         p43 = (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15])
-        p44 = kAma1a*vna*p[15]/(JAma1*vna+p[15])
+        p44 = -kAma1a*vna*p[15]/(JAma1*vna+p[15])
         p45 = kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15])
         # eq17
         p46 = (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16])
