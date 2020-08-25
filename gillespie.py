@@ -126,7 +126,7 @@ def gillespie_process(T,p_init,trial):
         t = t - np.log(local.random())/tot
         
         # write time step to output log
-        f = open('time-trials/time-'+str(trial)+'.csv','a+', newline='')
+        f = open('/scratch/rowlavel/time-trials/time-'+str(trial)+'.csv','a+', newline='')
         with f:
             write = csv.writer(f)
             write.writerow([t])
@@ -155,7 +155,7 @@ def gillespie_process(T,p_init,trial):
             p.append(proteinCount[key])
                 
         # write proteins to a file
-        f = open('protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
+        f = open('/nobackup/rowlavel/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
         with f:
             write = csv.writer(f)
             write.writerow(p)
