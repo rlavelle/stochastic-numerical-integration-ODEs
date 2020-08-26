@@ -34,7 +34,7 @@ def gillespie_process(T,p_init,trial):
         # eq3
         p9 = kCdc20s*vna
         p10 = -kCdc20d*p[2]
-        # eq4 (fixed) NEEDS FIXING? should we split (cdc20(t)-cdc20(t)) (looks like its already fully split)
+        # eq4
         p11 = (kCdc20Clb1p*p[0]*(p[2]-p[3]))/(JCdc20clb1*vna+p[2]-p[3])
         p12 = (kCdc20Clb3p*p[1]*(p[2]-p[3]))/(JCdc20Clb3*vna+p[2]-p[3])
         p13 = -kCdc20a*p[3]*vna/(JCdc20*vna+p[3])
