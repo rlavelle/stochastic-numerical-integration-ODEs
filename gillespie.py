@@ -10,7 +10,6 @@ def gillespie_process(T,p_init,trial):
     t = 0
     
     while t<T:
-        
         # time functions
         kDSBi = 0.02
         Sum1T = 1*vna
@@ -45,7 +44,7 @@ def gillespie_process(T,p_init,trial):
         p16 = kClb4sp*p[11]
         p17 = -kClb4d*p[4]
         p18 = -kClb4dp*Ama1(t)*p[4]*ivna
-        # eq6 (fixed) FIX AGAIN? should we split (clb1(t)+clb4(t))? still a time function (same thing looks like its already split)
+        # eq6
         p19 = (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5])
         p20 = -kSPi*vna*p[5]/(JSP*vna+p[5])
         # eq7
@@ -53,7 +52,7 @@ def gillespie_process(T,p_init,trial):
         p22 = kCdc5sp*p[11]
         p23 = -kCdc5d*p[6]
         p24 = -kCdc5dp*Ama1(t)*p[6]*ivna
-        # eq8 (fixed) NEEDS FIXING? should we split (cdc5t(t)-cdc5a(t)) 
+        # eq8 
         p25 = kCdc5ap*ivna*p[0]*(p[6]-p[7])
         p26 = kCdc5app*ivna*p[4]*(p[6]-p[7])
         p27 = -kCdc5i*p[7]
@@ -67,14 +66,14 @@ def gillespie_process(T,p_init,trial):
         p32 = kNdt80sp*vna*p[11]/(JNdt80(t)+p[11])
         p33 = -kNdt80d*p[11]
         p34 = -kNdt80dp*Ama1(t)*p[11]*ivna
-        # eq13 (fixed) NEEDS FIXING? should we split (sum1T-sum1iIme2(t)) sum1T=vna 
+        # eq13 
         p35 = kSum1i*(Sum1T-p[12])
         p36 = -kSum1a*p[12]
-        # eq14 (fixed) NEEDS FIXING? should we split (clb1(t)+clb4(t)) also (sum1T-sum1icdk1(t)) sum1T=vna
+        # eq14
         p37 = kSum1ip*(Sum1T-p[13])
         p38 = kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13])
         p39 = -kSum1ap*p[13]
-        # eq15 (fixed) NEEDS FIXING? should we split (sum1T-sum1iRC(t)) sum1T=vna
+        # eq15
         p40 = kSum1ippp*(Sum1T-p[14])
         p41 = -kSum1app*p[16]*p[14]*ivna
         # eq16 
