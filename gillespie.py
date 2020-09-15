@@ -105,16 +105,8 @@ def gillespie_process(T,p_init,trial):
         props = np.array(list(map(abs,propensities)))
         tot = props.sum(axis=0)
         
-        # calculate partial sums
-        partial_sums = []
-        for i in range(0,num_props+1):
-            s = 0
-            for j in range(0,i+1):
-                s += abs(propensities[j])
-            partial_sums.append(s)
-        
-        # create probability array
-        probs = np.array(partial_sums)/tot         
+        # create probability array from cummulative sum
+        probs = np.cumsum(props)/tot             
 
         # change time
         local = np.random.RandomState()
