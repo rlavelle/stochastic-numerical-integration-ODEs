@@ -19,106 +19,102 @@ def gillespie_process(T,p_init,trial):
         Ama1 = lambda t: p[18]-p[15] 
         Rim4 = lambda t: (1-math.tanh(0.2*(t-240)))/2
         
+        propensities = [
         # propoensities
         # eq1
-        p0 = kClb1s*vna
-        p1 = kClb1sp*p[11]
-        p2 = -kClb1d*p[0]
-        p3 = -kClb1dp*Ama1(t)*p[0]*ivna
-        p4 = -kClb1Cdc20d*p[3]*p[0]*ivna
+        kClb1s*vna,
+        kClb1sp*p[11],
+        -kClb1d*p[0],
+        -kClb1dp*Ama1(t)*p[0]*ivna,
+        -kClb1Cdc20d*p[3]*p[0]*ivna,
         # eq2
-        p5 = kClb3s*vna
-        p6 = -kClb3d*p[1]
-        p7 = -kClb3Cdc20d*p[3]*p[1]*ivna
-        p8 = 5*kClb3sp*(vna-Rim4(t)*vna)*math.exp(-(t-240)/25)
+        kClb3s*vna,
+        -kClb3d*p[1],
+        -kClb3Cdc20d*p[3]*p[1]*ivna,
+        5*kClb3sp*(vna-Rim4(t)*vna)*math.exp(-(t-240)/25),
         # eq3
-        p9 = kCdc20s*vna
-        p10 = -kCdc20d*p[2]
-        # eq4
-        p11 = (kCdc20Clb1p*p[0]*(p[2]-p[3]))/(JCdc20clb1*vna+p[2]-p[3])
-        p12 = (kCdc20Clb3p*p[1]*(p[2]-p[3]))/(JCdc20Clb3*vna+p[2]-p[3])
-        p13 = -kCdc20a*p[3]*vna/(JCdc20*vna+p[3])
-        p14 =  -kCdc20d*p[3]
+        kCdc20s*vna,
+        -kCdc20d*p[2],
+        # eq4 
+        (kCdc20Clb1p*p[0]*(p[2]-p[3]))/(JCdc20clb1*vna+p[2]-p[3]),
+        (kCdc20Clb3p*p[1]*(p[2]-p[3]))/(JCdc20Clb3*vna+p[2]-p[3]),
+        -kCdc20a*p[3]*vna/(JCdc20*vna+p[3]),
+        -kCdc20d*p[3],
         # eq5
-        p15 = kClb4s*vna
-        p16 = kClb4sp*p[11]
-        p17 = -kClb4d*p[4]
-        p18 = -kClb4dp*Ama1(t)*p[4]*ivna
-        # eq6
-        p19 = (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5])
-        p20 = -kSPi*vna*p[5]/(JSP*vna+p[5])
+        kClb4s*vna,
+        kClb4sp*p[11],
+        -kClb4d*p[4],
+        -kClb4dp*Ama1(t)*p[4]*ivna,
+        # eq6 
+        (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5]),
+        -kSPi*vna*p[5]/(JSP*vna+p[5]),
         # eq7
-        p21 = kCdc5s*vna
-        p22 = kCdc5sp*p[11]
-        p23 = -kCdc5d*p[6]
-        p24 = -kCdc5dp*Ama1(t)*p[6]*ivna
+        kCdc5s*vna,
+        kCdc5sp*p[11],
+        -kCdc5d*p[6],
+        -kCdc5dp*Ama1(t)*p[6]*ivna,
         # eq8 
-        p25 = kCdc5ap*ivna*p[0]*(p[6]-p[7])
-        p26 = kCdc5app*ivna*p[4]*(p[6]-p[7])
-        p27 = -kCdc5i*p[7]
-        p28 = -kCdc5d*p[7]
-        p29 = -kCdc5dp*Ama1(t)*p[7]*ivna
+        kCdc5ap*ivna*p[0]*(p[6]-p[7]),
+        kCdc5app*ivna*p[4]*(p[6]-p[7]),
+        -kCdc5i*p[7],
+        -kCdc5d*p[7],
+        -kCdc5dp*Ama1(t)*p[7]*ivna,
         # eq9/eq10 none
         # eq11
-        p30 = -kHcm1d*p[10]
+        -kHcm1d*p[10],
         # eq12
-        p31 = kNdt80s*vna
-        p32 = kNdt80sp*vna*p[11]/(JNdt80(t)+p[11])
-        p33 = -kNdt80d*p[11]
-        p34 = -kNdt80dp*Ama1(t)*p[11]*ivna
+        kNdt80s*vna,
+        kNdt80sp*vna*p[11]/(JNdt80(t)+p[11]),
+        -kNdt80d*p[11],
+        -kNdt80dp*Ama1(t)*p[11]*ivna,
         # eq13 
-        p35 = kSum1i*(Sum1T-p[12])
-        p36 = -kSum1a*p[12]
-        # eq14
-        p37 = kSum1ip*(Sum1T-p[13])
-        p38 = kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13])
-        p39 = -kSum1ap*p[13]
-        # eq15
-        p40 = kSum1ippp*(Sum1T-p[14])
-        p41 = -kSum1app*p[16]*p[14]*ivna
+        kSum1i*(Sum1T-p[12]),
+        -kSum1a*p[12],
+        # eq14 
+        kSum1ip*(Sum1T-p[13]),
+        kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13]),
+        -kSum1ap*p[13],
+        # eq15 
+        kSum1ippp*(Sum1T-p[14]),
+        -kSum1app*p[16]*p[14]*ivna,
         # eq16 
-        p42 = (kAma1i*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15])
-        p43 = (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15])
-        p44 = -kAma1a*vna*p[15]/(JAma1*vna+p[15])
-        p45 = kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15])
+        (kAma1i*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
+        (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
+        -kAma1a*vna*p[15]/(JAma1*vna+p[15]),
+        kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15]),
         # eq17
-        p46 = (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16])
-        p47 = (-kRCi*vna*p[16])/(JRC*vna+p[16])
-        p48 = (-kRCip*p[7]*p[16]*ivna*vna)/(JRC*vna+p[16])
+        (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16]),
+        (-kRCi*vna*p[16])/(JRC*vna+p[16]),
+        (-kRCip*p[7]*p[16]*ivna*vna)/(JRC*vna+p[16]),
         # eq18
-        p49 = -kDSBi*p[17]*Dmc1*ivna
+        -kDSBi*p[17]*Dmc1*ivna,
         # eq19
-        p50 = kAma1s*vna
-        p51 = -kAma1dp*p[18]
-        p52 = 40*kAma1s*(vna-Rim4(t)*vna)*math.exp(-(t-240)/100)
-        
+        kAma1s*vna,
+        -kAma1dp*p[18],
+        40*kAma1s*(vna-Rim4(t)*vna)*math.exp(-(t-240)/100)
+        ]
         num_props = 52
-
+        
         # ductape (im so sorry) we wanted abs(n)/n (my fault)
         birthDeathMap = []
         for i in range(0,num_props+1):
-            sign = str(eval(f'p{i}'))[0]
+            sign = str(propensities[i])[0]
             if sign == '-': birthDeathMap.append(-1)
             else: birthDeathMap.append(1)
         
-        # sum propensities
-        props = []
-        tot = 0
-        for i in range(0,num_props+1):
-            props.append(abs(eval(f'p{i}')))
-        
-        props = np.array(props)
-
+        props = np.array(list(map(abs,propensities)))
         tot = props.sum(axis=0)
-         
+        
+        # calculate partial sums
         partial_sums = []
         for i in range(0,num_props+1):
             s = 0
             for j in range(0,i+1):
-                s += abs(eval(f'p{j}'))
+                s += abs(propensities[j])
             partial_sums.append(s)
         
-        probs = np.array(partial_sums)/tot        
+        # create probability array
+        probs = np.array(partial_sums)/tot         
 
         # change time
         local = np.random.RandomState()
@@ -294,9 +290,7 @@ if __name__ == '__main__':
         tuple(np.arange(50,53)): names[18]
     }
     
-    with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(660,p_init,i) for i in range(0,47)])
-    with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(660,p_init,i) for i in range(47,94)])
-    with Pool() as pool:
-        results = pool.starmap(gillespie_process, [(660,p_init,i) for i in range(94,100)])
+    ranges = [list(l) for l in np.array_split(range(250),25)]
+    for rng in ranges:
+        with Pool() as pool:
+            results = pool.starmap(gillespie_process, [(660,p_init,i) for i in rng])
