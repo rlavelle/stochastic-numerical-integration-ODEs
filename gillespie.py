@@ -3,12 +3,15 @@ import matplotlib.pyplot as plt
 import math
 import csv
 from multiprocessing import Pool
+from scipy.interpolate import interp1d
 
 def gillespie_process(T,p_init,trial):     
     p = p_init
     # current time
     t = 0
-    
+    proteins = []
+    times = []
+
     while t<T:
         # time functions
         kDSBi = 0.02
@@ -111,13 +114,7 @@ def gillespie_process(T,p_init,trial):
         # change time
         local = np.random.RandomState()
         t = t - np.log(local.random())/tot
-        
-        # write time step to output log
-        f = open('/scratch/rowlavel/time-trials/time-'+str(trial)+'.csv','a+', newline='')
-        with f:
-            write = csv.writer(f)
-            write.writerow([t])
-        f.close()
+        times.append(t)
                 
         # get a random number
         local = np.random.RandomState()
@@ -140,13 +137,28 @@ def gillespie_process(T,p_init,trial):
         p = []
         for key in proteinCount.keys(): 
             p.append(proteinCount[key])
+        proteins.append(p)
                 
-        # write proteins to a file
-        f = open('/nobackup/rowlavel/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
-        with f:
-            write = csv.writer(f)
-            write.writerow(p)
-        f.close()
+    # interpolate
+    p_interp = []
+
+    for i in range(0, len(proteins[0])):
+        p_indiv = []
+
+        for j in range(0, len(proteins)):
+            p_indiv.append(proteins[j][i])
+
+        func = interp1d(times, p_indiv, kind = 'nearest', fill_value="extrapolate")
+        interp_proteins = func(t_steps)
+
+        p_interp.append(interp_proteins)
+    
+    # write proteins to a file
+    f = open('/nobackup/rowlavel/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
+    with f:
+        write = csv.writer(f)
+        write.writerows(p_interp)
+    f.close()
 
 
 if __name__ == '__main__':
@@ -281,6 +293,8 @@ if __name__ == '__main__':
         tuple(np.arange(49,50)): names[17],
         tuple(np.arange(50,53)): names[18]
     }
+
+    t_steps = np.arange(0, 660, 0.001)
     
     ranges = [list(l) for l in np.array_split(range(250),25)]
     for rng in ranges:
