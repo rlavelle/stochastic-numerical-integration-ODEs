@@ -61,7 +61,7 @@ if __name__ == "__main__":
     for j in range(0, proteincount):
         plt.plot(t_data, mean[j])
     plt.title(label='Mean Through '+str(trialcount)+' Trials')
-    plt.savefig('mean.png')
+    plt.savefig('analysis_images/mean.png')
 
     # calculate error over trials
     y_err = calc_error(proteins,mean)
@@ -70,4 +70,4 @@ if __name__ == "__main__":
     for j in range(0, proteincount):
         plt.errorbar(t_data, mean[j], yerr = y_err[j])
         plt.plot(t_data, mean[j])
-    plt.savefig('error_bars.png')
+    plt.savefig('analysis_images/error_bars.png')
