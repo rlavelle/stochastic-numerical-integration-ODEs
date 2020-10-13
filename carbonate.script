@@ -1,11 +1,9 @@
 #!/bin/bash
-#PBS -l nodes=1:ppn=10,walltime=30:00:00
-#PBS -m abe
-#PBS -M rowlavel@iu.edu
-#PBS -N Gillespie
-#PBS -o job_output
-#PBS -e job_error
 #PBS -k o
+#PBS -l nodes=1:ppn=10,walltime=30:00,vmem=16gb
+#PBS -M rowlavel@iu.edu
+#PBS -m abe
+#PBS -N Gillespie
 
 cd /N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs
 python3 gillespie.py
