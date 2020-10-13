@@ -3,6 +3,7 @@
 protein-trials
 carbonate.script
 scripts/
+analysis_images/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
