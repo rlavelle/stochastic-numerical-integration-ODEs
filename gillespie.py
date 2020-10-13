@@ -118,7 +118,7 @@ def gillespie_process(T,p_init,trial):
                 
         # get a random number
         local = np.random.RandomState()
-        r = local.random()
+        r = local.rand()
         
         # get index where r falls in probability ranges
         index = -1
