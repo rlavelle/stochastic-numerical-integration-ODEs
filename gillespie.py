@@ -303,4 +303,4 @@ if __name__ == '__main__':
     for rng in ranges:
         with Pool() as pool:
             results = pool.starmap(gillespie_process, [(660,p_init,i) for i in rng])
-            print('10 trials done')
+        print('10 trials done')
