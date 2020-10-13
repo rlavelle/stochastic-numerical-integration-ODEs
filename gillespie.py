@@ -154,7 +154,7 @@ def gillespie_process(T,p_init,trial):
         p_interp.append(interp_proteins)
     
     # write proteins to a file
-    f = open('/nobackup/rowlavel/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
+    f = open('protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
     with f:
         write = csv.writer(f)
         write.writerows(p_interp)
@@ -296,7 +296,7 @@ if __name__ == '__main__':
 
     t_steps = np.arange(0, 660, 0.001)
     
-    ranges = [list(l) for l in np.array_split(range(250),25)]
+    ranges = [list(l) for l in np.array_split(range(10),1)]
     for rng in ranges:
         with Pool() as pool:
             results = pool.starmap(gillespie_process, [(660,p_init,i) for i in rng])
