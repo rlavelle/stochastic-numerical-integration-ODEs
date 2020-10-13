@@ -1,6 +1,6 @@
 # Specific to project
 .DS_Store
-protein-trials
+protein-trials*
 carbonate.script
 scripts/
 analysis_images/
