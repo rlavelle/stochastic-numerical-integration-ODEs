@@ -4,6 +4,7 @@ import math
 import csv
 from multiprocessing import Pool
 from scipy.interpolate import interp1d
+import sys
 
 def gillespie_process(T,p_init,trial):     
     p = p_init
@@ -152,7 +153,7 @@ def gillespie_process(T,p_init,trial):
         p_interp.append(interp_proteins)
     
     # write proteins to a file
-    f = open('/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
+    f = open(f'{protein_folder_path}/proteins-trial-{str(trial)}.csv', 'a+', newline='')
     with f:
         write = csv.writer(f)
         write.writerows(p_interp)
@@ -160,7 +161,12 @@ def gillespie_process(T,p_init,trial):
 
 
 if __name__ == '__main__':
-    V = 10e-12
+    if(len(sys.argv) != 3):
+            raise(Exception("Error: expected a scaling factor and protein folder path"))
+
+    V = float(sys.argv[1])
+    protein_folder_path = sys.argv[2]
+
     NA = 6.023e23
     vna = V*NA*10e-9*10e-3
     ivna = 1/vna
