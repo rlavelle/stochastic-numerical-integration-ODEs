@@ -113,7 +113,7 @@ def gillespie_process(T,p_init,trial):
 
         # change time
         local = np.random.RandomState()
-        t = t - np.log(local.random())/tot
+        t = t - np.log(local.rand())/tot
         times.append(t)
                 
         # get a random number
