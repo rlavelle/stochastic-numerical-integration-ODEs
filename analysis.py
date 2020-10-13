@@ -43,14 +43,16 @@ def calc_error(proteins,mean):
     return y_err
 
 if __name__ == "__main__":
-    if(len(sys.argv) != 2):
-        raise(Exception("Error: expected a number of trials"))
+    if(len(sys.argv) != 4):
+        raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
 
     trialcount = int(sys.argv[1])
+    protiens_file_path = sys.argv[2]
+    trial_num = sys.argv[3]
     runtime = 660 
     proteincount = 19
 
-    proteins = [read_proteins('protein-trials/proteins-trial-'+str(i)+'.csv') for i in range(0,trialcount)]
+    proteins = [read_proteins(f'{protiens_file_path}/proteins-trial-{str(i)}.csv') for i in range(0,trialcount)]
 
     t_data = np.arange(0, runtime, 0.001)
 
@@ -61,7 +63,7 @@ if __name__ == "__main__":
     for j in range(0, proteincount):
         plt.plot(t_data, mean[j])
     plt.title(label='Mean Through '+str(trialcount)+' Trials')
-    plt.savefig('analysis_images/mean.png')
+    plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/mean-{trial_num}.png')
 
     # calculate error over trials
     y_err = calc_error(proteins,mean)
@@ -70,4 +72,4 @@ if __name__ == "__main__":
     for j in range(0, proteincount):
         plt.errorbar(t_data, mean[j], yerr = y_err[j])
         plt.plot(t_data, mean[j])
-    plt.savefig('analysis_images/error_bars.png')
+    plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/error_bars-{trial_num}.png')
