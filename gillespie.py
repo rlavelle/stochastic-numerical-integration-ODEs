@@ -23,78 +23,78 @@ def gillespie_process(T,p_init,trial):
         Rim4 = lambda t: (1-math.tanh(0.2*(t-240)))/2
         
         propensities = [
-        # propoensities
-        # eq1
-        kClb1s*vna,
-        kClb1sp*p[11],
-        -kClb1d*p[0],
-        -kClb1dp*Ama1(t)*p[0]*ivna,
-        -kClb1Cdc20d*p[3]*p[0]*ivna,
-        # eq2
-        kClb3s*vna,
-        -kClb3d*p[1],
-        -kClb3Cdc20d*p[3]*p[1]*ivna,
-        5*kClb3sp*(vna-Rim4(t)*vna)*math.exp(-(t-240)/25),
-        # eq3
-        kCdc20s*vna,
-        -kCdc20d*p[2],
-        # eq4 
-        (kCdc20Clb1p*p[0]*(p[2]-p[3]))/(JCdc20clb1*vna+p[2]-p[3]),
-        (kCdc20Clb3p*p[1]*(p[2]-p[3]))/(JCdc20Clb3*vna+p[2]-p[3]),
-        -kCdc20a*p[3]*vna/(JCdc20*vna+p[3]),
-        -kCdc20d*p[3],
-        # eq5
-        kClb4s*vna,
-        kClb4sp*p[11],
-        -kClb4d*p[4],
-        -kClb4dp*Ama1(t)*p[4]*ivna,
-        # eq6 
-        (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5]),
-        -kSPi*vna*p[5]/(JSP*vna+p[5]),
-        # eq7
-        kCdc5s*vna,
-        kCdc5sp*p[11],
-        -kCdc5d*p[6],
-        -kCdc5dp*Ama1(t)*p[6]*ivna,
-        # eq8 
-        kCdc5ap*ivna*p[0]*(p[6]-p[7]),
-        kCdc5app*ivna*p[4]*(p[6]-p[7]),
-        -kCdc5i*p[7],
-        -kCdc5d*p[7],
-        -kCdc5dp*Ama1(t)*p[7]*ivna,
-        # eq9/eq10 none
-        # eq11
-        -kHcm1d*p[10],
-        # eq12
-        kNdt80s*vna,
-        kNdt80sp*vna*p[11]/(JNdt80(t)+p[11]),
-        -kNdt80d*p[11],
-        -kNdt80dp*Ama1(t)*p[11]*ivna,
-        # eq13 
-        kSum1i*(Sum1T-p[12]),
-        -kSum1a*p[12],
-        # eq14 
-        kSum1ip*(Sum1T-p[13]),
-        kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13]),
-        -kSum1ap*p[13],
-        # eq15 
-        kSum1ippp*(Sum1T-p[14]),
-        -kSum1app*p[16]*p[14]*ivna,
-        # eq16 
-        (kAma1i*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
-        (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
-        -kAma1a*vna*p[15]/(JAma1*vna+p[15]),
-        kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15]),
-        # eq17
-        (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16]),
-        (-kRCi*vna*p[16])/(JRC*vna+p[16]),
-        (-kRCip*p[7]*p[16]*ivna*vna)/(JRC*vna+p[16]),
-        # eq18
-        -kDSBi*p[17]*Dmc1*ivna,
-        # eq19
-        kAma1s*vna,
-        -kAma1dp*p[18],
-        40*kAma1s*(vna-Rim4(t)*vna)*math.exp(-(t-240)/100)
+            # propoensities
+            # eq1
+            kClb1s*vna,
+            kClb1sp*p[11],
+            -kClb1d*p[0],
+            -kClb1dp*Ama1(t)*p[0]*ivna,
+            -kClb1Cdc20d*p[3]*p[0]*ivna,
+            # eq2
+            kClb3s*vna,
+            -kClb3d*p[1],
+            -kClb3Cdc20d*p[3]*p[1]*ivna,
+            5*kClb3sp*(vna-Rim4(t)*vna)*math.exp(-(t-240)/25),
+            # eq3
+            kCdc20s*vna,
+            -kCdc20d*p[2],
+            # eq4 
+            (kCdc20Clb1p*p[0]*(p[2]-p[3]))/(JCdc20clb1*vna+p[2]-p[3]),
+            (kCdc20Clb3p*p[1]*(p[2]-p[3]))/(JCdc20Clb3*vna+p[2]-p[3]),
+            -kCdc20a*p[3]*vna/(JCdc20*vna+p[3]),
+            -kCdc20d*p[3],
+            # eq5
+            kClb4s*vna,
+            kClb4sp*p[11],
+            -kClb4d*p[4],
+            -kClb4dp*Ama1(t)*p[4]*ivna,
+            # eq6 
+            (kSPa*(p[0]+p[4])*(vna-p[5]))/(JSP*vna+vna-p[5]),
+            -kSPi*vna*p[5]/(JSP*vna+p[5]),
+            # eq7
+            kCdc5s*vna,
+            kCdc5sp*p[11],
+            -kCdc5d*p[6],
+            -kCdc5dp*Ama1(t)*p[6]*ivna,
+            # eq8 
+            kCdc5ap*ivna*p[0]*(p[6]-p[7]),
+            kCdc5app*ivna*p[4]*(p[6]-p[7]),
+            -kCdc5i*p[7],
+            -kCdc5d*p[7],
+            -kCdc5dp*Ama1(t)*p[7]*ivna,
+            # eq9/eq10 none
+            # eq11
+            -kHcm1d*p[10],
+            # eq12
+            kNdt80s*vna,
+            kNdt80sp*vna*p[11]/(JNdt80(t)+p[11]),
+            -kNdt80d*p[11],
+            -kNdt80dp*Ama1(t)*p[11]*ivna,
+            # eq13 
+            kSum1i*(Sum1T-p[12]),
+            -kSum1a*p[12],
+            # eq14 
+            kSum1ip*(Sum1T-p[13]),
+            kSum1ipp*ivna*(p[0]+p[4])*(Sum1T-p[13]),
+            -kSum1ap*p[13],
+            # eq15 
+            kSum1ippp*(Sum1T-p[14]),
+            -kSum1app*p[16]*p[14]*ivna,
+            # eq16 
+            (kAma1i*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
+            (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
+            -kAma1a*vna*p[15]/(JAma1*vna+p[15]),
+            kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15]),
+            # eq17
+            (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16]),
+            (-kRCi*vna*p[16])/(JRC*vna+p[16]),
+            (-kRCip*p[7]*p[16]*ivna*vna)/(JRC*vna+p[16]),
+            # eq18
+            -kDSBi*p[17]*Dmc1*ivna,
+            # eq19
+            kAma1s*vna,
+            -kAma1dp*p[18],
+            40*kAma1s*(vna-Rim4(t)*vna)*math.exp(-(t-240)/100)
         ]
         num_props = 52
         
@@ -134,9 +134,7 @@ def gillespie_process(T,p_init,trial):
                 else:
                     proteinCount[proteinMap[interval]] += birthDeathMap[index]
         
-        p = []
-        for key in proteinCount.keys(): 
-            p.append(proteinCount[key])
+        p = [proteinCount[key] for key in proteinCount.keys()]
         proteins.append(p)
                 
     # interpolate
@@ -270,8 +268,7 @@ if __name__ == '__main__':
     names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
     p_init = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
 
-    proteinCount = {}
-    for j in range(0,len(names)): proteinCount[names[j]] = p_init[j]
+    proteinCount = {names[j] : p_init[j] for j in range(0,len(names))}
 
     proteinMap = {
         tuple(np.arange(0,5)): names[0],
