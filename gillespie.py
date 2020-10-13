@@ -154,7 +154,7 @@ def gillespie_process(T,p_init,trial):
         p_interp.append(interp_proteins)
     
     # write proteins to a file
-    f = open('protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
+    f = open('/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/protein-trials/proteins-trial-'+str(trial)+'.csv', 'a+', newline='')
     with f:
         write = csv.writer(f)
         write.writerows(p_interp)
