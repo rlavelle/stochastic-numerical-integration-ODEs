@@ -299,7 +299,7 @@ if __name__ == '__main__':
 
     t_steps = np.arange(0, 660, 0.001)
     
-    ranges = [list(l) for l in np.array_split(range(50),2)]
+    ranges = [list(l) for l in np.array_split(range(50),5)]
     for rng in ranges:
         with Pool() as pool:
             results = pool.starmap(gillespie_process, [(660,p_init,i) for i in rng])
