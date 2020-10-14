@@ -5,6 +5,7 @@ from scipy.interpolate import interp1d
 from scipy.integrate import odeint
 import math
 import sys
+import time
 
 """
 Helper functions for analysis
@@ -38,9 +39,7 @@ def calc_error(proteins,mean):
     proteins = np.asarray(proteins)
     mean = np.asarray(mean)
 
-    y_err = np.sqrt( ( ((proteins-mean)**2).sum(axis=0) )/(trialcount-1) )
-
-    return y_err
+    return np.sqrt((((proteins-mean)**2).sum(axis=0))/(trialcount-1))
 
 if __name__ == "__main__":
     if(len(sys.argv) != 4):
@@ -70,6 +69,6 @@ if __name__ == "__main__":
 
     # graph and save plot with error bars
     for j in range(0, proteincount):
-        plt.errorbar(t_data, mean[j], yerr = y_err[j])
+        plt.errorbar(t_data[::50], mean[j][::50], y_err[j][::50])
         plt.plot(t_data, mean[j])
     plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/error_bars-{trial_num}.png')
