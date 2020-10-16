@@ -4,6 +4,7 @@ protein-trials*
 *.script
 scripts/
 analysis_images/
+jobs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
