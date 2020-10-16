@@ -164,11 +164,11 @@ if __name__ == '__main__':
     if(len(sys.argv) != 3):
             raise(Exception("Error: expected a scaling factor and protein folder path"))
 
-    V = float(sys.argv[1])
     protein_folder_path = sys.argv[2]
 
+    V = 10e-12
     NA = 6.023e23
-    vna = V*NA*100e-9*10**(-3)
+    vna = V*NA*(float(sys.argv[1])*10**(-9))*10**(-3)
     ivna = 1/vna
 
     #Synthesis and degradation of Clb1 :
