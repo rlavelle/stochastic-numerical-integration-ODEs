@@ -168,7 +168,7 @@ if __name__ == '__main__':
     protein_folder_path = sys.argv[2]
 
     NA = 6.023e23
-    vna = V*NA*10e-9*10e-3
+    vna = V*NA*100e-9*10**(-3)
     ivna = 1/vna
 
     #Synthesis and degradation of Clb1 :
