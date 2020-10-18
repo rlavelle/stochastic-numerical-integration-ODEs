@@ -7,6 +7,9 @@ import math
 import sys
 import time
 
+# significant proteins
+PROTEINS_SIG = [1,0,6,4,11,15]
+
 """
 Helper functions for analysis
 """
@@ -24,7 +27,7 @@ def read_proteins(file):
 
 def calc_mean(proteins):
     mean_array = []
-    for j in range(0, proteincount):
+    for j in range(0, sig_proteincount):
         p_avg = []
         for i in range(0, trialcount):
             p_avg.append(proteins[i][j])
@@ -50,25 +53,38 @@ if __name__ == "__main__":
     trial_num = sys.argv[3]
     runtime = 660 
     proteincount = 19
+    sig_proteincount = 7
 
     proteins = [read_proteins(f'{protiens_file_path}/proteins-trial-{str(i)}.csv') for i in range(0,trialcount)]
 
-    t_data = np.arange(0, runtime, 0.001)
+    t_data = np.arange(0, runtime, 0.001)    
+
+    # create significant proteins list
+    sig_proteins = []
+    for i in range(0,trialcount):
+        proteins_sig = []
+        for j in PROTEINS_SIG:
+            proteins_sig.append(proteins[i][j])
+        special = []
+        for j in range(0,len(t_data)):
+            special.append(proteins[i][18][j]-proteins[i][15][j])
+        proteins_sig.append(special)
+        sig_proteins.append(proteins_sig)
 
     # calculate mean over trials
-    mean = calc_mean(proteins)
+    mean = calc_mean(sig_proteins)
 
-    # graph and save mean
-    for j in range(0, proteincount):
+    # graph and save means of protiens
+    for j in range(0, sig_proteincount):
         plt.plot(t_data, mean[j])
     plt.title(label=f'{trial_num} Mean Through {str(trialcount)} Trials')
     plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/mean-{trial_num}.png')
 
     # calculate error over trials
-    y_err = calc_error(proteins,mean)
+    y_err = calc_error(sig_proteins,mean)
 
     # graph and save plot with error bars
-    for j in range(0, proteincount):
+    for j in range(0, sig_proteincount):
         plt.errorbar(t_data[::50], mean[j][::50], y_err[j][::50])
         plt.plot(t_data, mean[j])
     plt.title(label=f'{trial_num} Error Bars Over Mean Through {str(trialcount)} Trials')
