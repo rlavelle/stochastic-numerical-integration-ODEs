@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # graph and save mean
     for j in range(0, proteincount):
         plt.plot(t_data, mean[j])
-    plt.title(label='Mean Through '+str(trialcount)+' Trials')
+    plt.title(label=f'{trial_num} Mean Through {str(trialcount)} Trials')
     plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/mean-{trial_num}.png')
 
     # calculate error over trials
@@ -71,4 +71,5 @@ if __name__ == "__main__":
     for j in range(0, proteincount):
         plt.errorbar(t_data[::50], mean[j][::50], y_err[j][::50])
         plt.plot(t_data, mean[j])
+    plt.title(label=f'{trial_num} Error Bars Over Mean Through {str(trialcount)} Trials')
     plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/error_bars-{trial_num}.png')
