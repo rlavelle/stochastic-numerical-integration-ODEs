@@ -1,8 +1,10 @@
-import numpy as np, matplotlib.pyplot as plt
+import numpy as np
 from scipy.integrate import odeint
 import numpy as np
 import math
 import sys
+import matplotlib.pyplot as plt
+import csv
 
 def ode_system(p,t):
     # time functions
