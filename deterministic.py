@@ -63,7 +63,7 @@ def calc_mean(proteins):
     return mean_array
 
 if __name__ == "__main__":
-    if(len(sys.argv) != 4):
+    if(len(sys.argv) != 5):
             raise(Exception("Error: expected a scaling factor, number of trials, trial number, and protein folder path"))
 
     V = 10e-12
