@@ -6,6 +6,9 @@ import sys
 import matplotlib.pyplot as plt
 import csv
 
+# significant proteins
+PROTEINS_SIG = [1,0,6,4,11,15]
+
 def ode_system(p,t):
     # time functions
     kDSBi = 0.02
