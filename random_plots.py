@@ -56,6 +56,6 @@ if __name__ == "__main__":
     # graph and save means of protiens
     for j in range(0, sig_proteincount):
         for i in range(0, len(sample)):
-        plt.plot(t_data, sample[i][j])
+            plt.plot(t_data, sample[i][j])
     plt.title(label=f'{trial_num} 8 Stochastic samples')
     plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/sample-{trial_num}.png')
