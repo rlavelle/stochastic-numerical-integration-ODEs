@@ -23,6 +23,25 @@ def read_proteins(file):
     f.close()
     return proteins
 
+def calc_mean(proteins):
+    mean_array = []
+    for j in range(0, sig_proteincount):
+        p_avg = []
+        for i in range(0, trialcount):
+            p_avg.append(proteins[i][j])
+        p_avg = np.asarray(p_avg)
+        p_avg = np.transpose(p_avg)
+        p_avg = p_avg.mean(axis=1)
+        mean_array.append(p_avg)
+    
+    return mean_array
+
+def calc_error(proteins,mean):
+    proteins = np.asarray(proteins)
+    mean = np.asarray(mean)
+
+    return np.sqrt((((proteins-mean)**2).sum(axis=0))/(trialcount-1))
+
 if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
@@ -51,11 +70,19 @@ if __name__ == "__main__":
         sig_proteins.append(proteins_sig)
 
     # randomly sample 8 trials
-    sample = random.sample(sig_proteins, 8)
+    #sample = random.sample(sig_proteins, 8)
+    sig_mean = calc_mean(sig_proteins)
+    sig_error = calc_error(sig_proteins, sig_mean)
 
     # graph and save means of protiens
+    # for j in range(0, sig_proteincount):
+    #     for i in range(0, len(sample)):
+    #         plt.plot(t_data, sample[i][j])
+    # plt.title(label=f'{trial_num} 8 Stochastic samples')
+    # plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/sample-{trial_num}.png')
+
     for j in range(0, sig_proteincount):
-        for i in range(0, len(sample)):
-            plt.plot(t_data, sample[i][j])
-    plt.title(label=f'{trial_num} 8 Stochastic samples')
-    plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/sample-{trial_num}.png')
+        plt.errorbar(t_data[::50], sig_mean[j][::50], sig_error[j][::50])
+        plt.plot(t_data, sig_mean[j])
+        plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/singe-protien-{j}-{trial_num}.png')
+    
