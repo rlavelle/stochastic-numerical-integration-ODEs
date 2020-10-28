@@ -161,8 +161,8 @@ def gillespie_process(T,p_init,trial):
 
 
 if __name__ == '__main__':
-    if(len(sys.argv) != 3):
-            raise(Exception("Error: expected a scaling factor and protein folder path"))
+    if(len(sys.argv) != 7):
+            raise(Exception("Error: expected a scaling factor and protein folder path, and values for clb"))
 
     protein_folder_path = sys.argv[2]
 
@@ -172,15 +172,19 @@ if __name__ == '__main__':
     ivna = 1/vna
 
     #Synthesis and degradation of Clb1 :
-    kClb1s = 0.002
-    kClb1sp = 0.2
+    #kClb1s = 0.002
+    kClb1s = float(sys.argv[3])
+    #kClb1sp = 0.2
+    kClb1sp = float(sys.argv[4])
     kClb1spp = 0.1
     kClb1d = 0.1
     kClb1dp = 0.2
     kClb1dpp = 0.02
     #NOTE : Decreasing Clb1 intrinsic decay rate widens Clb3 duration
-    kClb3s = 0.002
-    kClb3sp = 0.5
+    #kClb3s = 0.002
+    kClb3s = float(sys.argv[5])
+    #kClb3sp = 0.5
+    kClb3sp = float(sys.argv[6])
     kClb3d = 0.2
     kClb3Cdc20d = 0.2
     #Cdc20
