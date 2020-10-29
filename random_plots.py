@@ -82,7 +82,9 @@ if __name__ == "__main__":
     # plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/sample-{trial_num}.png')
 
     for j in range(0, sig_proteincount):
+        plt.figure()
         plt.errorbar(t_data[::50], sig_mean[j][::50], sig_error[j][::50])
         plt.plot(t_data, sig_mean[j])
-        plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/singe-protien-{j}-{trial_num}.png')
+        plt.title(label=f'protien {j} mean and error bars {trial_num}')
+        plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{j}-{trial_num}.png')
     
