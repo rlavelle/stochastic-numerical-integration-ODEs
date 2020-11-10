@@ -8,6 +8,9 @@ import sys
 import time
 import random
 
+
+# protein names
+names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
 # significant proteins
 PROTEINS_SIG = [1,0,6,4,11,15]
 
@@ -85,7 +88,12 @@ if __name__ == "__main__":
         plt.figure()
         plt.errorbar(t_data[::50], sig_mean[j][::50], sig_error[j][::50])
         plt.plot(t_data, sig_mean[j])
-        plt.title(label=f'protien {j} mean and error bars {trial_num}')
-        plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{j}-{trial_num}.png')
+        try:
+            plt.title(label=f'protien {names[PROTEINS_SIG[j]]} mean and error bars {trial_num}')
+            plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{names[PROTEINS_SIG[j]]]}-{trial_num}.png')
+        except:
+            plt.title(label=f'protien {'ama1t-ama1p'} mean and error bars {trial_num}')
+            plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{'ama1t-ama1p'}-{trial_num}.png')
+        
 
 # hi im curtis
