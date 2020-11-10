@@ -87,4 +87,5 @@ if __name__ == "__main__":
         plt.plot(t_data, sig_mean[j])
         plt.title(label=f'protien {j} mean and error bars {trial_num}')
         plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{j}-{trial_num}.png')
-    
+
+# hi im curtis
