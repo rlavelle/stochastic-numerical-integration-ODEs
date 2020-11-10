@@ -92,7 +92,7 @@ if __name__ == "__main__":
             plt.title(label=f'protien {names[PROTEINS_SIG[j]]} mean and error bars {trial_num}')
             plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{names[PROTEINS_SIG[j]]]}-{trial_num}.png')
         except:
-            plt.title(label=f'protien {'ama1t-ama1p'} mean and error bars {trial_num}')
+            plt.title(label=f'protien ama1t-ama1p mean and error bars {trial_num}')
             plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{'ama1t-ama1p'}-{trial_num}.png')
         
 
