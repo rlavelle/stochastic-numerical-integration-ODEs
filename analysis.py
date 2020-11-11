@@ -48,6 +48,7 @@ if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
 
+    analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
     trial_num = sys.argv[3]
@@ -78,7 +79,7 @@ if __name__ == "__main__":
     for j in range(0, sig_proteincount):
         plt.plot(t_data, mean[j])
     plt.title(label=f'{trial_num} Mean Through {str(trialcount)} Trials')
-    plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/mean-{trial_num}.png')
+    plt.savefig(f'{analysis_image_path}/mean-{trial_num}.png')
 
     # calculate error over trials
     y_err = calc_error(sig_proteins,mean)
@@ -88,4 +89,4 @@ if __name__ == "__main__":
         plt.errorbar(t_data[::50], mean[j][::50], y_err[j][::50])
         plt.plot(t_data, mean[j])
     plt.title(label=f'{trial_num} Error Bars Over Mean Through {str(trialcount)} Trials')
-    plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/error_bars-{trial_num}.png')
+    plt.savefig(f'{analysis_image_path}/error_bars-{trial_num}.png')
