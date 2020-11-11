@@ -45,6 +45,10 @@ def calc_error(proteins,mean):
 
     return np.sqrt((((proteins-mean)**2).sum(axis=0))/(trialcount-1))
 
+"""
+run program with:
+    python3 random_plots.py trials protein-folder-path trial-label
+"""
 if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
@@ -52,7 +56,7 @@ if __name__ == "__main__":
     analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
-    trial_num = sys.argv[3]
+    trial_label = sys.argv[3]
     runtime = 660 
     proteincount = 19
     sig_proteincount = 7
@@ -83,8 +87,8 @@ if __name__ == "__main__":
         plt.errorbar(t_data[::50], sig_mean[j][::50], sig_error[j][::50])
         plt.plot(t_data, sig_mean[j])
         try:
-            plt.title(label=f'protien {names[PROTEINS_SIG[j]]} mean and error bars {trial_num}')
-            plt.savefig(f'{analysis_image_path}/single-protien-{names[PROTEINS_SIG[j]]}-{trial_num}.png')
+            plt.title(label=f'protien {names[PROTEINS_SIG[j]]} mean and error bars {trial_label}')
+            plt.savefig(f'{analysis_image_path}/single-protien-{names[PROTEINS_SIG[j]]}-{trial_label}.png')
         except:
-            plt.title(label=f'protien ama1t-ama1p mean and error bars {trial_num}')
-            plt.savefig(f'{analysis_image_path}/single-protien-ama1t-ama1p-{trial_num}.png')
+            plt.title(label=f'protien ama1t-ama1p mean and error bars {trial_label}')
+            plt.savefig(f'{analysis_image_path}/single-protien-ama1t-ama1p-{trial_label}.png')
