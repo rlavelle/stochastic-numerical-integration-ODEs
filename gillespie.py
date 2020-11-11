@@ -162,7 +162,7 @@ def gillespie_process(T,p_init,trial):
 
 """
 run program with:
-    python3 gillespie.py scale folder-path clb1s clb1sp clb3s clb3sp clb4s clb4sp 
+    python3 gillespie.py scale protein-folder-path clb1s clb1sp clb3s clb3sp clb4s clb4sp 
 """
 if __name__ == '__main__':
     if(len(sys.argv) != 9):
