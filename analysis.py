@@ -44,6 +44,11 @@ def calc_error(proteins,mean):
 
     return np.sqrt((((proteins-mean)**2).sum(axis=0))/(trialcount-1))
 
+
+"""
+run program with:
+    python3 analysis.py trials protein-folder-path trial-label
+"""
 if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
@@ -51,7 +56,7 @@ if __name__ == "__main__":
     analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
-    trial_num = sys.argv[3]
+    trial_label = sys.argv[3]
     runtime = 660 
     proteincount = 19
     sig_proteincount = 7
@@ -78,8 +83,8 @@ if __name__ == "__main__":
     # graph and save means of protiens
     for j in range(0, sig_proteincount):
         plt.plot(t_data, mean[j])
-    plt.title(label=f'{trial_num} Mean Through {str(trialcount)} Trials')
-    plt.savefig(f'{analysis_image_path}/mean-{trial_num}.png')
+    plt.title(label=f'{trial_label} Mean Through {str(trialcount)} Trials')
+    plt.savefig(f'{analysis_image_path}/mean-{trial_label}.png')
 
     # calculate error over trials
     y_err = calc_error(sig_proteins,mean)
@@ -88,5 +93,5 @@ if __name__ == "__main__":
     for j in range(0, sig_proteincount):
         plt.errorbar(t_data[::50], mean[j][::50], y_err[j][::50])
         plt.plot(t_data, mean[j])
-    plt.title(label=f'{trial_num} Error Bars Over Mean Through {str(trialcount)} Trials')
-    plt.savefig(f'{analysis_image_path}/error_bars-{trial_num}.png')
+    plt.title(label=f'{trial_label} Error Bars Over Mean Through {str(trialcount)} Trials')
+    plt.savefig(f'{analysis_image_path}/error_bars-{trial_label}.png')
