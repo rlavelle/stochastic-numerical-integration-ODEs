@@ -160,6 +160,10 @@ def gillespie_process(T,p_init,trial):
     f.close()
 
 
+"""
+run program with:
+    python3 gillespie.py scale folder-path clb1s clb1sp clb3s clb3sp clb4s clb4sp 
+"""
 if __name__ == '__main__':
     if(len(sys.argv) != 9):
             raise(Exception("Error: expected a scaling factor and protein folder path, and values for clb1/clb3/clb4"))
