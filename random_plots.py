@@ -49,6 +49,7 @@ if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
 
+    analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
     trial_num = sys.argv[3]
@@ -77,23 +78,13 @@ if __name__ == "__main__":
     sig_mean = calc_mean(sig_proteins)
     sig_error = calc_error(sig_proteins, sig_mean)
 
-    # graph and save means of protiens
-    # for j in range(0, sig_proteincount):
-    #     for i in range(0, len(sample)):
-    #         plt.plot(t_data, sample[i][j])
-    # plt.title(label=f'{trial_num} 8 Stochastic samples')
-    # plt.savefig(f'/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images/sample-{trial_num}.png')
-
     for j in range(0, sig_proteincount):
         plt.figure()
         plt.errorbar(t_data[::50], sig_mean[j][::50], sig_error[j][::50])
         plt.plot(t_data, sig_mean[j])
         try:
             plt.title(label=f'protien {names[PROTEINS_SIG[j]]} mean and error bars {trial_num}')
-            plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-{names[PROTEINS_SIG[j]]}-{trial_num}.png')
+            plt.savefig(f'{analysis_image_path}/single-protien-{names[PROTEINS_SIG[j]]}-{trial_num}.png')
         except:
             plt.title(label=f'protien ama1t-ama1p mean and error bars {trial_num}')
-            plt.savefig(f'/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images/single-protien-ama1t-ama1p-{trial_num}.png')
-        
-
-# hi im curtis goss
+            plt.savefig(f'{analysis_image_path}/single-protien-ama1t-ama1p-{trial_num}.png')
