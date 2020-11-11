@@ -161,7 +161,7 @@ def gillespie_process(T,p_init,trial):
 
 
 if __name__ == '__main__':
-    if(len(sys.argv) != 7):
+    if(len(sys.argv) != 9):
             raise(Exception("Error: expected a scaling factor and protein folder path, and values for clb"))
 
     protein_folder_path = sys.argv[2]
@@ -200,8 +200,10 @@ if __name__ == '__main__':
     kClb3Cdc20d = 0.3
     #Clb1 phosophorylation of Cdc20 weaker than Clb3
     #Synthesis and degradation of Clb4 :
-    kClb4s = 0.2
-    kClb4sp = 0.1
+    #kClb4s = 0.2
+    kClb4s = float(sys.argv[7])
+    #kClb4sp = 0.1
+    kClb4sp = float(sys.argv[8])
     kClb4d = 0.2
     kClb4dp = 1
     kClb4dpp = 0.02
