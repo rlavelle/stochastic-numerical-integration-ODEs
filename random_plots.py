@@ -53,7 +53,7 @@ if __name__ == "__main__":
     if(len(sys.argv) != 4):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
 
-    analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
+    analysis_image_path = '/home/cvanoeve/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
     trial_label = sys.argv[3]
