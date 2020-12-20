@@ -67,9 +67,16 @@ def calc_mean(proteins):
     
     return mean_array
 
+"""
+run program with:
+    python3 deterministic.py scale start-time end-time num-trials trial-num protein-folder-path init-values.txt 
+"""
 if __name__ == "__main__":
-    if(len(sys.argv) != 5):
-            raise(Exception("Error: expected a scaling factor, number of trials, trial number, and protein folder path"))
+    if(len(sys.argv) != 8):
+            raise(Exception("Error: expected a scaling-factor, start-time, end-time, number-of-trials, trial-number, protein-folder-path, init-values"))
+
+    start_time = int(sys.argv[2])
+    end_time = int(sys.argv[3])
 
     V = 10e-12
     NA = 6.023e23
@@ -190,8 +197,14 @@ if __name__ == "__main__":
     kAma1exp = 0.08
     kAma1s = 0.01
 
-    p_init = [0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna]
-    time = np.arange(0,660,0.001)
+    with open(sys.argv[7],'r') as file:
+        p_init = tuple(float(val.strip('\n')) for val in file.readlines())
+
+
+    if all([p == 0 for p in p_init]):
+        p_init = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
+    
+    time = np.arange(start_time,end_time,0.001)
 
     p_t = odeint(func=ode_system, y0=p_init, t=time)
 
@@ -208,16 +221,15 @@ if __name__ == "__main__":
     plt.plot(time, points)
     # plt.show()
 
-    trialcount = int(sys.argv[2])
-    protiens_file_path = sys.argv[4]
-    trial_num = sys.argv[3]
-    runtime = 660 
+    trialcount = int(sys.argv[4])
+    protiens_file_path = sys.argv[6]
+    trial_num = sys.argv[5]
     proteincount = 19
     sig_proteincount = 7
 
     proteins = [read_proteins(f'{protiens_file_path}/proteins-trial-{str(i)}.csv') for i in range(0,trialcount)]
 
-    t_data = np.arange(0, runtime, 0.001)    
+    t_data = np.arange(start_time, end_time, 0.001)    
 
     # create significant proteins list
     sig_proteins = []

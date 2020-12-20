@@ -47,23 +47,24 @@ def calc_error(proteins,mean):
 
 """
 run program with:
-    python3 analysis.py trials protein-folder-path trial-label
+    python3 analysis.py trials start-time end-time protein-folder-path trial-label
 """
 if __name__ == "__main__":
-    if(len(sys.argv) != 4):
+    if(len(sys.argv) != 6):
         raise(Exception("Error: expected a number of trials, proteins folder path and trial number"))
 
     analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
-    protiens_file_path = sys.argv[2]
-    trial_label = sys.argv[3]
-    runtime = 660 
+    start_time = int(sys.argv[2])
+    end_time = int(sys.argv[3])
+    protiens_file_path = sys.argv[4]
+    trial_label = sys.argv[5]
     proteincount = 19
     sig_proteincount = 7
 
     proteins = [read_proteins(f'{protiens_file_path}/proteins-trial-{str(i)}.csv') for i in range(0,trialcount)]
 
-    t_data = np.arange(0, runtime, 0.001)    
+    t_data = np.arange(start_time, end_time, 0.001)    
 
     # create significant proteins list
     sig_proteins = []

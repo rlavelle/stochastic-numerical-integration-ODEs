@@ -9,7 +9,7 @@ import sys
 def gillespie_process(T,p_init,trial):     
     p = p_init
     # current time
-    t = 0
+    t = start_time
     proteins = []
     times = []
 
@@ -162,13 +162,22 @@ def gillespie_process(T,p_init,trial):
 
 """
 run program with:
-    python3 gillespie.py scale protein-folder-path clb1s clb1sp clb3s clb3sp clb4s clb4sp 
+    python3 gillespie.py scale start-time end-time protein-folder-path clb-values.txt init-values.txt 
 """
 if __name__ == '__main__':
-    if(len(sys.argv) != 9):
-            raise(Exception("Error: expected a scaling factor and protein folder path, and values for clb1/clb3/clb4"))
+    if(len(sys.argv) != 7):
+            raise(Exception("Error: expecting scale start-time end-time protein-folder-path clb-values.txt init-values.txt"))
 
-    protein_folder_path = sys.argv[2]
+
+    protein_folder_path = sys.argv[4]
+    start_time = int(sys.argv[2])
+    end_time = int(sys.argv[3])
+
+    with open(sys.argv[5],'r') as file:
+        clb_vals = [float(val.strip('\n')) for val in file.readlines()]
+    
+    with open(sys.argv[6],'r') as file:
+        p_init = tuple(float(val.strip('\n')) for val in file.readlines())
 
     V = 10e-12
     NA = 6.023e23
@@ -177,18 +186,18 @@ if __name__ == '__main__':
 
     #Synthesis and degradation of Clb1 :
     #kClb1s = 0.002
-    kClb1s = float(sys.argv[3])
+    kClb1s = clb_vals[0]
     #kClb1sp = 0.2
-    kClb1sp = float(sys.argv[4])
+    kClb1sp = clb_vals[1]
     kClb1spp = 0.1
     kClb1d = 0.1
     kClb1dp = 0.2
     kClb1dpp = 0.02
     #NOTE : Decreasing Clb1 intrinsic decay rate widens Clb3 duration
     #kClb3s = 0.002
-    kClb3s = float(sys.argv[5])
+    kClb3s = clb_vals[2]
     #kClb3sp = 0.5
-    kClb3sp = float(sys.argv[6])
+    kClb3sp = clb_vals[3]
     kClb3d = 0.2
     kClb3Cdc20d = 0.2
     #Cdc20
@@ -205,9 +214,9 @@ if __name__ == '__main__':
     #Clb1 phosophorylation of Cdc20 weaker than Clb3
     #Synthesis and degradation of Clb4 :
     #kClb4s = 0.2
-    kClb4s = float(sys.argv[7])
+    kClb4s = clb_vals[4]
     #kClb4sp = 0.1
-    kClb4sp = float(sys.argv[8])
+    kClb4sp = clb_vals[5]
     kClb4d = 0.2
     kClb4dp = 1
     kClb4dpp = 0.02
@@ -282,7 +291,9 @@ if __name__ == '__main__':
     kAma1s = 0.01
 
     names = ['clb1','clb3','cdc20T','cdc20','clb4','sp','cdc5t','cdc5a','ndd1t','ndd1a','hcm1','ndt80','sum1iIme2','sum1iCdk1','sum1iRC','ama1p','rc','dsb','ama1t']
-    p_init = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
+    
+    if all([p == 0 for p in p_init]):
+        p_init = (0,0,0,0,0,0,0,0,0,0,vna,0,0,0,0,0,0,vna,vna)
 
     proteinCount = {names[j] : p_init[j] for j in range(0,len(names))}
 
@@ -307,9 +318,9 @@ if __name__ == '__main__':
         tuple(np.arange(50,53)): names[18]
     }
 
-    t_steps = np.arange(0, 660, 0.001)
+    t_steps = np.arange(start_time, end_time, 0.001)
     
     ranges = [list(l) for l in np.array_split(range(50),5)]
     for rng in ranges:
         with Pool() as pool:
-            results = pool.starmap(gillespie_process, [(660,p_init,i) for i in rng])
+            results = pool.starmap(gillespie_process, [(end_time,p_init,i) for i in rng])
