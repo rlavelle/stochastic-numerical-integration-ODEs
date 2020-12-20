@@ -5,6 +5,8 @@ protein-trials*
 scripts/
 analysis_images/
 jobs/
+clb-vals.txt
+*-means.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
