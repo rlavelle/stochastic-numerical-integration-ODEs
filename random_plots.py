@@ -56,7 +56,7 @@ if __name__ == "__main__":
     analysis_image_path = '/N/u/rowlavel/Carbonate/stochastic-numerical-integration-ODEs/analysis_images'
     trialcount = int(sys.argv[1])
     start_time = int(sys.argv[2])
-    end_time = int(sys.argv[3]
+    end_time = int(sys.argv[3])
     protiens_file_path = sys.argv[4]
     trial_label = sys.argv[5]
     proteincount = 19
