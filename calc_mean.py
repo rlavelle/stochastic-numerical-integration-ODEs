@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     trialcount = int(sys.argv[1])
     protiens_file_path = sys.argv[2]
-    t = int(sys.argv[3])
+    t = int(float(int(sys.argv[3])/0.001))
     output_file = sys.argv[4]
     proteincount = 19
 
