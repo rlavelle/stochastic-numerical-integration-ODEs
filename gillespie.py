@@ -86,7 +86,7 @@ def gillespie_process(T,p_init,trial):
             (kAma1ip*ivna*p[0]*(p[18]-p[15])*vna)/(JAma1*vna+p[18]-p[15]),
             -kAma1a*vna*p[15]/(JAma1*vna+p[15]),
             kAma1clb3p*ivna*p[1]*(p[18]-p[15])*vna/(JAma1*vna+p[18]-p[15]),
-            # eq17
+            # eq17 
             (kRCa*p[17]*(vna-p[16]))/(JRC*vna+vna-p[16]),
             (-kRCi*vna*p[16])/(JRC*vna+p[16]),
             (-kRCip*p[7]*p[16]*ivna*vna)/(JRC*vna+p[16]),
